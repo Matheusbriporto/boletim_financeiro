@@ -170,6 +170,30 @@
         .data-table .text-right { text-align: right; }
         .data-table .fw-bold { font-weight: 700; }
         .data-table .row-highlight { background-color: #f9fafb; }
+        
+        /* NOVO: Segmented Progress Bar (Faturamento) listrado */
+        .summary-bar-container { margin-top: 10px; margin-bottom: 24px; }
+        .summary-bar { display: flex; height: 36px; border-radius: 10px; overflow: hidden; gap: 6px; }
+        
+        /* Listras idênticas à imagem */
+        .seg-1 { width: 47%; background: repeating-linear-gradient(45deg, var(--primary-light), var(--primary-light) 4px, #a8f274 4px, #a8f274 8px); }
+        .seg-2 { width: 33%; background: repeating-linear-gradient(45deg, var(--primary-dark), var(--primary-dark) 4px, #22523e 4px, #22523e 8px); }
+        .seg-3 { width: 20%; background: repeating-linear-gradient(45deg, #e5e7eb, #e5e7eb 4px, #d1d5db 4px, #d1d5db 8px); }
+
+        .summary-legend { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .leg-item { display: flex; flex-direction: column; width: 30%; }
+        .leg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+        .leg-title { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; font-weight: 500;}
+        .leg-value { font-size: 18px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; letter-spacing: -0.5px;}
+        .leg-perc { font-size: 12px; font-weight: 500; color: var(--text-muted); display: flex; flex-direction: column; gap: 2px;}
+        .leg-perc-badge { font-weight: 700; color: var(--primary-dark); }
+        
+        .see-all-btn {
+            display: block; width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px;
+            text-align: center; font-size: 13px; font-weight: 600; color: var(--text-dark); cursor: pointer; text-decoration: none;
+            background: transparent; margin-top: auto; transition: background 0.2s;
+        }
+        .see-all-btn:hover { background: #f9fafb; }
     </style>
 </head>
 <body>
@@ -322,7 +346,7 @@
             <div class="grid-middle">
                 
                 <!-- Gráfico: Evolução Sazonal -->
-                <div class="card">
+                <div class="card" style="margin-bottom: 0;">
                     <div class="card-title-row">
                         <div class="card-title-text">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -350,19 +374,71 @@
                         </div>
                     </div>
 
-                    <div class="chart-wrapper" id="barChart" style="height: 250px;"></div>
+                    <div class="chart-wrapper" id="barChart" style="height: 100%; min-height: 400px;"></div>
                 </div>
 
-                <!-- Gráfico de Rosca: Composição de Deduções -->
-                <div class="card">
-                    <div class="card-title-row">
-                        <div class="card-title-text">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
-                            Composição de Deduções
+                <!-- Right Column: Stacked Cards -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Gráfico de Rosca: Composição de Deduções -->
+                    <div class="card" style="padding-bottom: 16px;">
+                        <div class="card-title-row" style="margin-bottom: 10px;">
+                            <div class="card-title-text">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+                                Composição de Deduções
+                            </div>
+                            <div class="card-dots">•••</div>
                         </div>
-                        <div class="card-dots">•••</div>
+                        <div class="chart-wrapper" id="donutChart" style="display: flex; justify-content: center; align-items: center; height: 260px;"></div>
                     </div>
-                    <div class="chart-wrapper" id="donutChart" style="display: flex; justify-content: center; align-items: center; height: 300px;"></div>
+
+                    <!-- NOVO: Resumo de Faturamento (Barras horizontais listradas idêntico à imagem referenciada) -->
+                    <div class="card" style="display: flex; flex-direction: column; flex-grow: 1;">
+                        <div class="card-title-row" style="margin-bottom: 16px;">
+                            <div class="card-title-text">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                Resumo de Faturamento
+                            </div>
+                            <div class="card-dots">•••</div>
+                        </div>
+                        <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; color: var(--text-dark);">R$ 4.579.416</h2>
+                        
+                        <div class="summary-bar-container">
+                            <div class="summary-bar">
+                                <div class="seg-1"></div>
+                                <div class="seg-2"></div>
+                                <div class="seg-3"></div>
+                            </div>
+                        </div>
+
+                        <div class="summary-legend">
+                            <div class="leg-item">
+                                <div class="leg-title"><span class="leg-dot" style="background: var(--primary-light);"></span> Contas</div>
+                                <div class="leg-value">R$ 2.149.852</div>
+                                <div class="leg-perc">
+                                    <span>Orç: R$ 492.934</span>
+                                    <span class="leg-perc-badge">436,1%</span>
+                                </div>
+                            </div>
+                            <div class="leg-item">
+                                <div class="leg-title"><span class="leg-dot" style="background: var(--primary-dark);"></span> Horizontal</div>
+                                <div class="leg-value">R$ 1.507.039</div>
+                                <div class="leg-perc">
+                                    <span>Orç: R$ 952.624</span>
+                                    <span class="leg-perc-badge">158,2%</span>
+                                </div>
+                            </div>
+                            <div class="leg-item" style="width: 25%;">
+                                <div class="leg-title"><span class="leg-dot" style="background: #d1d5db;"></span> Ecom</div>
+                                <div class="leg-value">R$ 922.525</div>
+                                <div class="leg-perc">
+                                    <span>Orç: R$ 116.385</span>
+                                    <span class="leg-perc-badge">792,6%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="see-all-btn">Ver relatório completo →</button>
+                    </div>
                 </div>
 
             </div>
@@ -505,8 +581,8 @@
                             <tr>
                                 <td>Manutenção Predial</td>
                                 <td class="text-right text-muted">R$ 40.000</td>
-                                <td class="text-right">R$ 96.159</td>
-                                <td class="text-right fw-bold">140,4%</td>
+                                <td class="text-right text-red">R$ 96.159</td>
+                                <td class="text-right text-red fw-bold">140,4%</td>
                             </tr>
                             <tr class="row-highlight">
                                 <td class="fw-bold">Total</td>
