@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boletim Financeiro - Fiscalis Theme</title>
+    <title>Dashboard Financeiro - Fiscalis Theme</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
@@ -17,14 +17,13 @@
             --primary-gradient: linear-gradient(135deg, #245a44 0%, #153527 100%);
             --primary-light: #9deb62; /* Verde Limão Vibrante */
             --primary-light-soft: rgba(157, 235, 98, 0.2);
-            --chart-light-green: #d1f0b1; /* Cor mais forte para o gráfico claro */
-            --chart-dark-green: #2d6a4f;  /* Cor para o mês em destaque */
             
             --text-dark: #111827;
             --text-muted: #6b7280;
             --text-light: #9ca3af;
             
             --border-color: #e5e7eb;
+            --accent-red: #ef4444; /* Vermelho para números negativos */
         }
 
         * {
@@ -48,9 +47,9 @@
             height: 100vh;
         }
 
-        /* ================= SIDEBAR (Apenas Ícones) ================= */
+        /* ================= SIDEBAR ================= */
         .sidebar {
-            width: 80px; /* Sidebar Fina */
+            width: 80px; 
             min-width: 80px;
             background-color: var(--sidebar-bg);
             border-right: 1px solid var(--border-color);
@@ -61,129 +60,63 @@
             height: 100vh;
         }
 
-        .logo {
-            margin-bottom: 40px;
-        }
-
+        .logo { margin-bottom: 40px; }
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-dark);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-light);
-            font-size: 24px;
-            font-weight: 700;
+            width: 40px; height: 40px; background-color: var(--primary-dark);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: var(--primary-light); font-size: 24px; font-weight: 700;
         }
 
         .nav-section { margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; width: 100%;}
         
         .nav-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
+            display: flex; justify-content: center; align-items: center;
+            width: 48px; height: 48px; border-radius: 14px;
+            color: var(--text-muted); cursor: pointer; transition: all 0.2s; margin-bottom: 8px;
         }
 
-        .nav-item.active {
-            background-color: var(--primary-light);
-            color: var(--primary-dark);
-        }
-
+        .nav-item.active { background-color: var(--primary-light); color: var(--primary-dark); }
         .nav-item:hover:not(.active) { background-color: rgba(0,0,0,0.05); }
 
         .sidebar-bottom {
-            margin-top: auto;
-            width: 48px;
-            height: 48px;
-            background: var(--primary-gradient);
-            border-radius: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--primary-light);
-            cursor: pointer;
+            margin-top: auto; width: 48px; height: 48px; background: var(--primary-gradient);
+            border-radius: 14px; display: flex; justify-content: center; align-items: center;
+            color: var(--primary-light); cursor: pointer;
         }
 
         /* ================= MAIN CONTENT ================= */
         .main-content {
-            flex-grow: 1;
-            padding: 40px 48px;
-            overflow-y: auto;
-            background-color: #ffffff;
-            height: 100vh;
+            flex-grow: 1; padding: 40px 48px; overflow-y: auto; background-color: #ffffff; height: 100vh;
         }
 
         /* Top Header */
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 40px;
-        }
-
+        .top-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
         .header-title h1 { font-size: 28px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; letter-spacing: -0.5px; }
         .header-title p { font-size: 15px; color: var(--text-muted); }
-
         .header-actions { display: flex; align-items: center; gap: 16px; }
         
         .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #f3f4f6;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            color: var(--text-muted);
-            width: 280px;
+            display: flex; align-items: center; background-color: #f3f4f6; padding: 10px 16px;
+            border-radius: 20px; font-size: 14px; color: var(--text-muted); width: 280px;
         }
         
         .btn-select {
-            padding: 10px 18px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            background: white;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-dark);
-            cursor: pointer;
+            padding: 10px 18px; border: 1px solid var(--border-color); border-radius: 20px;
+            background: white; font-size: 14px; font-weight: 500; color: var(--text-dark); cursor: pointer;
         }
 
         .btn-export {
-            padding: 10px 24px;
-            background-color: var(--primary-light);
-            color: var(--primary-dark);
-            border: none;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 10px 24px; background-color: var(--primary-light); color: var(--primary-dark);
+            border: none; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
         }
 
-        /* Dashboard Grid Layout */
+        /* Grids */
         .grid-kpi {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 24px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px;
         }
-
         .grid-middle {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 24px;
-            margin-bottom: 24px;
+            display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; margin-bottom: 24px;
         }
         
         @media (max-width: 1400px) {
@@ -193,25 +126,17 @@
 
         /* Cards Base */
         .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 28px;
-            position: relative;
+            background-color: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 20px; padding: 28px; position: relative;
         }
-
         .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .card-title-text { font-size: 16px; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
         .card-dots { color: var(--text-light); font-weight: bold; cursor: pointer; }
 
-        /* KPI Cards Específicos */
+        /* KPI Cards */
         .kpi-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 180px;}
-        
         .kpi-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .kpi-icon {
-            width: 48px; height: 48px; border-radius: 14px;
-            display: flex; justify-content: center; align-items: center;
-        }
+        .kpi-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; justify-content: center; align-items: center; }
         
         .kpi-title { font-size: 15px; color: var(--text-muted); font-weight: 500; margin-bottom: 4px; }
         .kpi-value-row { display: flex; align-items: baseline; gap: 12px; }
@@ -219,118 +144,73 @@
         .kpi-footer { font-size: 13px; color: var(--text-light); margin-top: auto; font-weight: 500; }
         .kpi-arrow { position: absolute; bottom: 28px; right: 28px; color: var(--text-light); font-size: 20px; }
 
-        /* KPI 1 - Destaque Dark Green */
-        .kpi-card.highlight {
-            background: var(--primary-gradient);
-            border: none;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .kpi-card.highlight::after {
-            content: ''; position: absolute; top: 0; right: 0; width: 180px; height: 100%;
-            background-image: radial-gradient(circle at 100% 50%, rgba(157, 235, 98, 0.15) 0%, transparent 70%);
-        }
+        /* KPI Highlight */
+        .kpi-card.highlight { background: var(--primary-gradient); border: none; color: white; position: relative; overflow: hidden; }
+        .kpi-card.highlight::after { content: ''; position: absolute; top: 0; right: 0; width: 180px; height: 100%; background-image: radial-gradient(circle at 100% 50%, rgba(157, 235, 98, 0.15) 0%, transparent 70%); }
         .kpi-card.highlight .kpi-icon { background-color: var(--primary-light); color: var(--primary-dark); }
         .kpi-card.highlight .kpi-title { color: rgba(255,255,255,0.8); }
         .kpi-card.highlight .kpi-value { color: white; }
         .kpi-card.highlight .kpi-footer { color: rgba(255,255,255,0.6); }
         .kpi-card.highlight .kpi-arrow { color: rgba(255,255,255,0.4); }
-        .kpi-card.highlight .badge { background-color: rgba(255,255,255,0.1); color: var(--primary-light); }
 
         /* Badges */
-        .badge {
-            padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;
-        }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
         .badge.green { background-color: var(--primary-light-soft); color: #3f6e1f; }
         .badge.red { background-color: rgba(239, 68, 68, 0.1); color: var(--accent-red); }
 
-        /* Default KPI Icons */
         .kpi-card:not(.highlight) .kpi-icon { background-color: var(--primary-dark); color: white; }
 
-        /* Chart Wrappers */
-        .chart-wrapper { width: 100%; height: 320px; }
+        .chart-wrapper { width: 100%; height: 260px; }
 
-        /* Modern Tables Style for P.E. and Grupos de Conta */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-        
-        .data-table th {
-            text-align: left;
-            padding: 12px 16px;
-            color: var(--text-muted);
-            font-weight: 500;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .data-table td {
-            padding: 16px;
-            border-bottom: 1px solid #f3f4f6;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-        
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .data-table th { text-align: left; padding: 12px 16px; color: var(--text-muted); font-weight: 500; border-bottom: 1px solid var(--border-color); }
+        .data-table td { padding: 16px; border-bottom: 1px solid #f3f4f6; color: var(--text-dark); font-weight: 500; }
+        .data-table tr:last-child td { border-bottom: none; }
         .data-table .text-right { text-align: right; }
         .data-table .fw-bold { font-weight: 700; }
         .data-table .row-highlight { background-color: #f9fafb; }
-        .data-table .text-red { color: var(--accent-red); }
-        .data-table .text-green { color: #3f6e1f; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        <!-- SIDEBAR (Apenas Ícones) -->
+        <!-- SIDEBAR -->
         <div class="sidebar">
             <div class="logo">
                 <div class="logo-icon">⬢</div>
             </div>
 
             <div class="nav-section">
-                <!-- Dashboard -->
                 <div class="nav-item active" title="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
                 </div>
-                <!-- Fluxo de Caixa -->
                 <div class="nav-item" title="Fluxo de Caixa">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 </div>
-                <!-- Transações -->
                 <div class="nav-item" title="Transações">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
             </div>
 
             <div class="nav-section">
-                <!-- Orçamentos -->
                 <div class="nav-item" title="Orçamentos">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
                 </div>
-                <!-- Despesas -->
                 <div class="nav-item" title="Despesas">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                 </div>
-                <!-- Receitas -->
                 <div class="nav-item" title="Receitas">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
                 </div>
             </div>
 
             <div class="nav-section">
-                <!-- Analytics -->
                 <div class="nav-item" title="Analytics">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                 </div>
             </div>
 
-            <!-- Botão AI Bottom -->
             <div class="sidebar-bottom" title="AI Assistant">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
             </div>
@@ -341,13 +221,13 @@
             
             <div class="top-header">
                 <div class="header-title">
-                    <h1>Boletim Financeiro</h1>
+                    <h1>Dashboard Financeiro</h1>
                     <p>Panorama financeiro com foco em resultado e tomada de decisão • 01/07/2026</p>
                 </div>
                 <div class="header-actions">
                     <div class="search-bar">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        Search here...
+                        Busca rápida...
                     </div>
                     <button class="btn-select">Mensal ▾</button>
                     <button class="btn-export">
@@ -359,7 +239,7 @@
 
             <!-- KPI ROW (4 Colunas) -->
             <div class="grid-kpi">
-                <!-- KPI 1 (Faturamento Líquido) -->
+                <!-- KPI 1 -->
                 <div class="card kpi-card highlight">
                     <div>
                         <div class="kpi-header">
@@ -378,7 +258,7 @@
                     <div class="kpi-arrow">↗</div>
                 </div>
 
-                <!-- KPI 2 (Despesas Operacionais) -->
+                <!-- KPI 2 -->
                 <div class="card kpi-card">
                     <div>
                         <div class="kpi-header">
@@ -398,7 +278,7 @@
                     <div class="kpi-arrow">↗</div>
                 </div>
 
-                <!-- KPI 3 (Saldo Fluxo de Caixa) -->
+                <!-- KPI 3 -->
                 <div class="card kpi-card">
                     <div>
                         <div class="kpi-header">
@@ -417,7 +297,7 @@
                     <div class="kpi-arrow">↗</div>
                 </div>
 
-                <!-- KPI 4 (NOVO - Ponto de Equilíbrio) -->
+                <!-- KPI 4 -->
                 <div class="card kpi-card">
                     <div>
                         <div class="kpi-header">
@@ -436,24 +316,55 @@
                     <div class="kpi-footer">Orçamento: 78,0%</div>
                     <div class="kpi-arrow" style="color: var(--accent-red);">↗</div>
                 </div>
-
             </div>
 
-            <!-- MIDDLE ROW (Gráfico Evolução Sazonal P.E.) -->
-            <div class="card" style="margin-bottom: 24px;">
-                <div class="card-title-row">
-                    <div class="card-title-text">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                        Evolução Sazonal (P.E.)
+            <!-- MIDDLE ROW (Gráficos) -->
+            <div class="grid-middle">
+                
+                <!-- Gráfico: Evolução Sazonal -->
+                <div class="card">
+                    <div class="card-title-row">
+                        <div class="card-title-text">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            Evolução Sazonal (P.E.)
+                        </div>
+                        <div class="card-dots">•••</div>
                     </div>
-                    <div class="card-dots">•••</div>
+                    
+                    <!-- Dados Multi-anuais lado a lado -->
+                    <div style="display: flex; gap: 32px; margin-bottom: 16px; flex-wrap: wrap;">
+                        <div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">2024</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--text-dark);">85,0%</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">2025</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--text-dark);">82,2%</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 4px;">2026 (Atual)</div>
+                            <div style="display: flex; align-items: baseline; gap: 8px;">
+                                <h2 style="font-size: 24px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px;">90,3%</h2>
+                                <span class="badge red">↗ 15% desvio</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrapper" id="barChart" style="height: 250px;"></div>
                 </div>
-                <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px;">
-                    <h2 style="font-size: 28px; font-weight: 800; letter-spacing: -1px;">93,3%</h2>
-                    <span class="badge red">↗ 15% desvio</span>
+
+                <!-- Gráfico de Rosca: Composição de Deduções -->
+                <div class="card">
+                    <div class="card-title-row">
+                        <div class="card-title-text">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+                            Composição de Deduções
+                        </div>
+                        <div class="card-dots">•••</div>
+                    </div>
+                    <div class="chart-wrapper" id="donutChart" style="display: flex; justify-content: center; align-items: center; height: 300px;"></div>
                 </div>
-                <!-- Gráfico de Barras com 3 Colunas por Mês e Cores Ajustadas -->
-                <div class="chart-wrapper" id="barChart" style="height: 350px;"></div>
+
             </div>
 
             <!-- BOTTOM ROW (Tabelas) -->
@@ -488,7 +399,7 @@
                                 <td class="fw-bold">Fat. Frete</td>
                                 <td class="text-right">R$ 32.800.808</td>
                                 <td class="text-right">R$ 32.571.202</td>
-                                <td class="text-right text-red">-R$ 229.606</td>
+                                <td class="text-right">-R$ 229.606</td>
                             </tr>
                             <tr>
                                 <td class="fw-bold">Outras R.</td>
@@ -500,7 +411,7 @@
                                 <td class="fw-bold">Deduções</td>
                                 <td class="text-right">R$ 750.000</td>
                                 <td class="text-right">R$ 969.303</td>
-                                <td class="text-right text-red">R$ 219.303</td>
+                                <td class="text-right">R$ 219.303</td>
                             </tr>
                             <tr class="row-highlight">
                                 <td class="fw-bold">Fat. Liquido</td>
@@ -512,13 +423,13 @@
                                 <td class="fw-bold">Desp. Ope.</td>
                                 <td class="text-right">R$ 29.339.833</td>
                                 <td class="text-right">R$ 30.361.394</td>
-                                <td class="text-right text-red">R$ 1.021.561</td>
+                                <td class="text-right">R$ 1.021.561</td>
                             </tr>
                             <tr class="row-highlight">
                                 <td class="fw-bold">P.E</td>
                                 <td class="text-right">78,0%</td>
-                                <td class="text-right fw-bold text-red">93,3%</td>
-                                <td class="text-right text-red">15,3%</td>
+                                <td class="text-right fw-bold">93,3%</td>
+                                <td class="text-right">15,3%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -594,8 +505,8 @@
                             <tr>
                                 <td>Manutenção Predial</td>
                                 <td class="text-right text-muted">R$ 40.000</td>
-                                <td class="text-right text-red">R$ 96.159</td>
-                                <td class="text-right text-red fw-bold">140,4%</td>
+                                <td class="text-right">R$ 96.159</td>
+                                <td class="text-right fw-bold">140,4%</td>
                             </tr>
                             <tr class="row-highlight">
                                 <td class="fw-bold">Total</td>
@@ -612,64 +523,36 @@
         </div>
     </div>
 
-    <!-- Chart Scripts -->
+    <!-- Chart Scripts & Funcionalidades -->
     <script>
+        // 1. Gráfico de Barras Sazonal Multi-ano
         var optionsBar = {
             series: [
-                {
-                    name: '2024',
-                    data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3] 
-                },
-                {
-                    name: '2025',
-                    data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7]
-                },
-                {
-                    name: '2026',
-                    data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.3] // Junho = 93.3
-                }
+                { name: '2024', data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3] },
+                { name: '2025', data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7] },
+                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.3] }
             ],
-            chart: {
-                type: 'bar',
-                height: 350,
-                toolbar: { show: false }
-            },
+            chart: { type: 'bar', height: 280, toolbar: { show: false } },
             plotOptions: {
                 bar: {
                     horizontal: false,
                     columnWidth: '80%',
                     borderRadius: 4,
-                    dataLabels: {
-                        position: 'top',
-                    },
+                    dataLabels: { position: 'top' },
                 },
             },
             colors: ['#e2f2d5', '#a5d6a7', '#1b4332'],
             fill: {
                 type: ['pattern', 'pattern', 'solid'],
-                pattern: {
-                    style: 'slantedLines',
-                    width: 4,
-                    height: 4,
-                    strokeWidth: 1,
-                }
+                pattern: { style: 'slantedLines', width: 4, height: 4, strokeWidth: 1 }
             },
             dataLabels: {
                 enabled: true,
-                formatter: function (val) {
-                    return val + "%";
-                },
+                formatter: function (val) { return val + "%"; },
                 offsetY: -20,
-                style: {
-                    fontSize: '10px',
-                    colors: ["#6b7280"]
-                }
+                style: { fontSize: '10px', colors: ["#6b7280"] }
             },
-            stroke: {
-                show: true,
-                width: 2,
-                colors: ['transparent']
-            },
+            stroke: { show: true, width: 2, colors: ['transparent'] },
             xaxis: {
                 categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
                 axisBorder: { show: false },
@@ -679,21 +562,67 @@
             yaxis: {
                 labels: { style: { colors: '#9ca3af', fontSize: '13px', fontWeight: 500 }, formatter: function(val) { return val + "%" } }
             },
-            legend: {
-                position: 'top',
-                horizontalAlign: 'right',
-                labels: { colors: '#6b7280' }
-            },
-            grid: {
-                borderColor: '#f3f4f6',
-                strokeDashArray: 4,
-                yaxis: { lines: { show: true } }
-            }
+            legend: { position: 'top', horizontalAlign: 'right', labels: { colors: '#6b7280' } },
+            grid: { borderColor: '#f3f4f6', strokeDashArray: 4, yaxis: { lines: { show: true } } }
         };
-
         var chartBar = new ApexCharts(document.querySelector("#barChart"), optionsBar);
         chartBar.render();
 
+        // 2. Gráfico de Rosca (Donut) para Deduções
+        var optionsDonut = {
+            series: [644876, 202211, 111836, 10380], // Falta, Comercial, Avaria, Sinistro
+            labels: ['Falta', 'Comercial', 'Avaria', 'Sinistro'],
+            chart: { type: 'donut', height: 320 },
+            colors: ['#1b4332', '#245a44', '#9deb62', '#d1f0b1'], // Paleta do tema Fiscalis
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: '72%',
+                        labels: {
+                            show: true,
+                            name: { show: true, fontSize: '13px', color: '#6b7280' },
+                            value: {
+                                show: true,
+                                fontSize: '24px',
+                                fontWeight: 800,
+                                color: '#111827',
+                                formatter: function (val) { return "R$ " + (val/1000).toFixed(0) + "k"; }
+                            },
+                            total: {
+                                show: true,
+                                showAlways: true,
+                                label: 'Total',
+                                color: '#6b7280',
+                                formatter: function (w) { return "R$ 969k"; }
+                            }
+                        }
+                    }
+                }
+            },
+            dataLabels: { enabled: false },
+            stroke: { width: 0 },
+            legend: {
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '13px',
+                markers: { radius: 12 }
+            }
+        };
+        var chartDonut = new ApexCharts(document.querySelector("#donutChart"), optionsDonut);
+        chartDonut.render();
+
+        // 3. Automação: Destacar todos os números negativos em vermelho
+        document.addEventListener("DOMContentLoaded", function() {
+            const tableCells = document.querySelectorAll('.data-table td');
+            
+            tableCells.forEach(function(td) {
+                // Se a célula contiver um valor monetário negativo (-R$) ou um percentual/valor solto negativo
+                if (td.innerText.includes('-R$') || (td.innerText.trim().startsWith('-') && !isNaN(parseInt(td.innerText.charAt(1))))) {
+                    td.style.color = 'var(--accent-red)';
+                    td.style.fontWeight = '700';
+                }
+            });
+        });
     </script>
 </body>
 </html>
