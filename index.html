@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Financeiro - Fiscalis Theme</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Scripts Externos -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root {
             /* Cores Exatas da Referência */
@@ -104,13 +108,18 @@
         .btn-select {
             padding: 10px 18px; border: 1px solid var(--border-color); border-radius: 20px;
             background: white; font-size: 14px; font-weight: 500; color: var(--text-dark); cursor: pointer;
+            transition: all 0.2s;
         }
+        
+        .btn-select:hover { background-color: #f3f4f6; }
 
         .btn-export {
             padding: 10px 24px; background-color: var(--primary-light); color: var(--primary-dark);
             border: none; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; gap: 8px; transition: all 0.2s;
         }
+        
+        .btn-export:hover { filter: brightness(0.95); }
 
         /* Grids */
         .grid-kpi {
@@ -229,7 +238,8 @@
 <body>
 
     <div class="app-container">
-        <div class="sidebar">
+        <!-- Barra lateral ocultada na exportação de PDF para melhor diagramação -->
+        <div class="sidebar" data-html2canvas-ignore>
             <div class="logo">
                 <div class="logo-icon">⬢</div>
             </div>
@@ -269,22 +279,22 @@
             </div>
         </div>
 
-        <div class="main-content">
+        <div class="main-content" id="dashboard-content">
             
-            <div class="toast-container" id="toastContainer"></div>
+            <div class="toast-container" id="toastContainer" data-html2canvas-ignore></div>
 
             <div class="top-header">
                 <div class="header-title">
                     <h1>Dashboard Financeiro</h1>
                     <p>Panorama financeiro com foco em resultado e tomada de decisão • 07/07/2026</p>
                 </div>
-                <div class="header-actions">
+                <div class="header-actions" data-html2canvas-ignore>
                     <div class="search-bar">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         Busca rápida...
                     </div>
                     <button class="btn-select">jul/2026 ▾</button>
-                    <button class="btn-export">
+                    <button class="btn-export" onclick="exportToPDF()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
                         Export
                     </button>
@@ -321,7 +331,8 @@
                         </div>
                         <div class="kpi-previsto">Previsão: <strong>R$ 150k</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--accent-red);">A realizar: R$ 136.221</div>
+                    <!-- Footer cor ajustada para verde conf. solicitado -->
+                    <div class="kpi-footer" style="color: #3f6e1f;">A realizar: R$ 136.221</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -335,9 +346,10 @@
                         <div class="kpi-value-row">
                             <div class="kpi-value" data-value="873" data-format="currency-k">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsão: <strong>R$ 873k</strong></div>
+                        <!-- Ajuste Previsão -> Meta | 750k -->
+                        <div class="kpi-previsto">Meta: <strong>R$ 750k</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: #3f6e1f;">✓ Dentro do previsto</div>
+                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ 123.395 acima da meta</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -365,11 +377,14 @@
                             <div class="kpi-title">Ponto de Equilíbrio</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="78.0" data-format="percent">0</div>
+                            <!-- Valor calculado dinamicamente no JS -->
+                            <div class="kpi-value" id="pe-value-display" data-format="percent">0</div>
                         </div>
+                        <!-- Meta e Previsão alinhados lado a lado ou um abaixo do outro -->
                         <div class="kpi-previsto">Previsão: <strong>84,5%</strong></div>
+                        <div class="kpi-previsto">Meta: <strong>78,0%</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: #3f6e1f;">✓ 6,5% abaixo da previsão</div>
+                    <div class="kpi-footer" style="color: var(--text-muted);">Atualizado de forma automática</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -412,8 +427,8 @@
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2026 (Atual)</div>
                                 <div style="display: flex; align-items: baseline; gap: 6px;">
-                                    <h2 style="font-size: 20px; font-weight: 800; color: var(--text-dark);">78,0%</h2>
-                                    <span class="badge green" style="padding: 2px 6px;">✓ Saudável</span>
+                                    <h2 style="font-size: 20px; font-weight: 800; color: var(--text-dark);" id="pe-header-current">...</h2>
+                                    <span class="badge green" style="padding: 2px 6px;">✓ Atualizado</span>
                                 </div>
                             </div>
                         </div>
@@ -426,13 +441,15 @@
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                                 Demonstrativo Financeiro (jul/2026)
                             </div>
+                            <!-- Botão Toggle -->
+                            <button id="toggleTableBtn" class="btn-select" style="padding: 6px 14px; font-size: 12px; border-color: var(--primary-light);">Visualizar Projetado</button>
                         </div>
                         <table class="data-table">
                             <thead>
                                 <tr>
                                     <th>Indicador</th>
                                     <th class="text-right">Previsão</th>
-                                    <th class="text-right">Realizado</th>
+                                    <th class="text-right" id="table-col-header">Realizado</th>
                                     <th class="text-right">Desvio</th>
                                 </tr>
                             </thead>
@@ -440,32 +457,32 @@
                                 <tr class="row-highlight">
                                     <td class="fw-bold">Fat. Bruto</td>
                                     <td class="text-right">R$ 35.354.020</td>
-                                    <td class="text-right fw-bold">R$ 4.671.024</td>
-                                    <td class="text-right text-muted">- R$ 30.682.996</td>
+                                    <td class="text-right fw-bold" id="td-fat">R$ 4.671.024</td>
+                                    <td class="text-right text-muted" id="td-fat-dev">- R$ 30.682.996</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Outras R.</td>
                                     <td class="text-right">R$ 150.000</td>
-                                    <td class="text-right">R$ 13.779</td>
-                                    <td class="text-right text-muted">- R$ 136.221</td>
+                                    <td class="text-right" id="td-outras">R$ 13.779</td>
+                                    <td class="text-right text-muted" id="td-outras-dev">- R$ 136.221</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Deduções</td>
                                     <td class="text-right">R$ 873.395</td>
-                                    <td class="text-right">R$ 873.395</td>
-                                    <td class="text-right">R$ 0</td>
+                                    <td class="text-right" id="td-dedu">R$ 873.395</td>
+                                    <td class="text-right" id="td-dedu-dev">R$ 0</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Desp. Ope.</td>
                                     <td class="text-right">R$ 29.276.511</td>
-                                    <td class="text-right">R$ 21.838.232</td>
-                                    <td class="text-right text-muted">- R$ 7.438.279</td>
+                                    <td class="text-right" id="td-desp">R$ 21.838.232</td>
+                                    <td class="text-right text-muted" id="td-desp-dev">- R$ 7.438.279</td>
                                 </tr>
                                 <tr class="row-highlight">
                                     <td class="fw-bold">P.E</td>
                                     <td class="text-right">84,5%</td>
-                                    <td class="text-right fw-bold">78,0%</td>
-                                    <td class="text-right text-muted">- 6,5%</td>
+                                    <td class="text-right fw-bold" id="td-pe">78,0%</td>
+                                    <td class="text-right text-muted" id="td-pe-dev">- 6,5%</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -627,13 +644,26 @@
     </div>
 
     <script>
-        // --- 0. Animação de Contagem dos Números Superiores (Giro/Contador) ---
+        // --- 0. Lógica de Ponto de Equilíbrio Calculado ---
+        // Formula: Despesas Operacionais / (Faturamento + Outras Receitas - Deduções)
+        const vlrFatBruto = 4671024;
+        const vlrOutrasReceitas = 13779;
+        const vlrDeducoes = 873395;
+        const vlrDespOp = 21838232;
+
+        const baseReceitas = vlrFatBruto + vlrOutrasReceitas - vlrDeducoes;
+        const calcPE = (vlrDespOp / baseReceitas) * 100;
+        
+        // Atribui ao elemento HTML para que o contador leia o Target (valor destino)
+        document.getElementById('pe-value-display').setAttribute('data-value', calcPE);
+        document.getElementById('pe-header-current').innerText = calcPE.toFixed(1).replace('.', ',') + "%";
+
+        // --- Função Base Animação Contadores ---
         function animateValue(obj, start, end, duration, formatFn) {
             let startTimestamp = null;
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                // Easing suave (easeOutExpo)
                 const easeProgress = 1 - Math.pow(1 - progress, 4);
                 const currentVal = progress * (end - start) + start;
                 
@@ -665,29 +695,22 @@
             series: [
                 { name: '2024', data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3, 81.3] },
                 { name: '2025', data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7, 82.8] },
-                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.7, 78.0] } 
+                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.7, calcPE.toFixed(1)] } 
             ],
             chart: { 
                 type: 'bar', 
                 height: 220, 
                 toolbar: { show: false },
-                animations: {
-                    enabled: true,
-                    easing: 'easeinout',
-                    speed: 800,
-                    animateGradually: { enabled: true, delay: 150 },
-                    dynamicAnimation: { enabled: true, speed: 350 }
-                }
+                animations: { enabled: true, easing: 'easeinout', speed: 800 }
             },
             plotOptions: {
                 bar: {
-                    horizontal: false,
-                    columnWidth: '80%',
-                    borderRadius: 4,
+                    horizontal: false, columnWidth: '80%', borderRadius: 4,
                     dataLabels: { position: 'top' },
                 },
             },
-            colors: ['#e2f2d5', '#a5d6a7', '#1b4332'],
+            // Cores ajustadas para maior contraste
+            colors: ['#a3d9b1', '#549c71', '#1b4332'],
             fill: {
                 type: ['pattern', 'pattern', 'solid'],
                 pattern: { style: 'slantedLines', width: 4, height: 4, strokeWidth: 1 }
@@ -696,7 +719,8 @@
                 enabled: true,
                 formatter: function (val) { return val + "%"; },
                 offsetY: -20,
-                style: { fontSize: '9px', colors: ["#6b7280"] }
+                // Texto de Datalabels reforçado
+                style: { fontSize: '10px', colors: ["#111827"], fontWeight: 700 }
             },
             stroke: { show: true, width: 2, colors: ['transparent'] },
             xaxis: {
@@ -714,20 +738,14 @@
         var chartBar = new ApexCharts(document.querySelector("#barChart"), optionsBar);
         chartBar.render();
 
-        // --- 2. Gráfico de Rosca (Donut) Fatiado ---
+        // --- 2. Gráfico de Rosca (Donut) ---
         var optionsDonut = {
             series: [578407, 141359, 130685, 22944], 
             labels: ['Falta', 'Comercial', 'Avaria', 'Sinistro'],
             chart: { 
                 type: 'donut', 
                 height: 250,
-                animations: {
-                    enabled: true,
-                    easing: 'easeout', 
-                    speed: 1500,       
-                    animateGradually: { enabled: true, delay: 250 },
-                    dynamicAnimation: { enabled: true, speed: 500 }
-                }
+                animations: { enabled: true, easing: 'easeout', speed: 1500 }
             },
             colors: ['#1b4332', '#245a44', '#9deb62', '#d1f0b1'], 
             plotOptions: {
@@ -738,17 +756,11 @@
                             show: true,
                             name: { show: true, fontSize: '12px', color: '#6b7280' },
                             value: {
-                                show: true,
-                                fontSize: '20px',
-                                fontWeight: 800,
-                                color: '#111827',
+                                show: true, fontSize: '20px', fontWeight: 800, color: '#111827',
                                 formatter: function (val) { return "R$ " + (val/1000).toFixed(0) + "k"; }
                             },
                             total: {
-                                show: true,
-                                showAlways: true,
-                                label: 'Total',
-                                color: '#6b7280',
+                                show: true, showAlways: true, label: 'Total', color: '#6b7280',
                                 formatter: function (w) { return "R$ 873k"; }
                             }
                         }
@@ -756,24 +768,83 @@
                 }
             },
             dataLabels: { enabled: false },
-            stroke: { 
-                show: true,
-                width: 4, 
-                colors: ['#ffffff'], 
-                dashArray: 0,
-                lineCap: 'round'
-            },
-            legend: {
-                position: 'bottom',
-                horizontalAlign: 'center',
-                fontSize: '12px',
-                markers: { radius: 12 }
-            }
+            stroke: { show: true, width: 4, colors: ['#ffffff'], lineCap: 'round' },
+            legend: { position: 'bottom', horizontalAlign: 'center', fontSize: '12px', markers: { radius: 12 } }
         };
         var chartDonut = new ApexCharts(document.querySelector("#donutChart"), optionsDonut);
         chartDonut.render();
 
-        // --- 3. Automações e Popups ---
+
+        // --- 3. Lógica do Botão Toggle da Tabela ---
+        const btnToggleTable = document.getElementById('toggleTableBtn');
+        let viewIsRealizado = true;
+
+        const dataRealizado = {
+            header: "Realizado",
+            fat: "R$ 4.671.024", fatDev: "- R$ 30.682.996",
+            outras: "R$ 13.779", outrasDev: "- R$ 136.221",
+            dedu: "R$ 873.395", deduDev: "R$ 0",
+            desp: "R$ 21.838.232", despDev: "- R$ 7.438.279",
+            pe: "78,0%", peDev: "- 6,5%"
+        };
+
+        const dataProjetado = {
+            header: "Projetado",
+            fat: "R$ 35.504.019", fatDev: "+ R$ 149.999",
+            outras: "R$ 149.999", outrasDev: "+ R$ 149.999",
+            dedu: "R$ 873.395", deduDev: "R$ 123.395",
+            desp: "R$ 29.276.511", despDev: "+ R$ 3",
+            pe: "78,0%", peDev: "- 6,5%"
+        };
+
+        btnToggleTable.addEventListener('click', () => {
+            viewIsRealizado = !viewIsRealizado;
+            
+            // Qual set de dados usar
+            const dataToUse = viewIsRealizado ? dataRealizado : dataProjetado;
+            
+            // Troca Botão Label
+            btnToggleTable.innerText = viewIsRealizado ? "Visualizar Projetado" : "Visualizar Realizado";
+            
+            // Aplica os dados
+            document.getElementById('table-col-header').innerText = dataToUse.header;
+            
+            document.getElementById('td-fat').innerText = dataToUse.fat;
+            document.getElementById('td-fat-dev').innerText = dataToUse.fatDev;
+            
+            document.getElementById('td-outras').innerText = dataToUse.outras;
+            document.getElementById('td-outras-dev').innerText = dataToUse.outrasDev;
+            
+            document.getElementById('td-dedu').innerText = dataToUse.dedu;
+            document.getElementById('td-dedu-dev').innerText = dataToUse.deduDev;
+            
+            document.getElementById('td-desp').innerText = dataToUse.desp;
+            document.getElementById('td-desp-dev').innerText = dataToUse.despDev;
+            
+            document.getElementById('td-pe').innerText = dataToUse.pe;
+            document.getElementById('td-pe-dev').innerText = dataToUse.peDev;
+        });
+
+
+        // --- 4. Função de Exportar para PDF ---
+        function exportToPDF() {
+            const element = document.getElementById('dashboard-content');
+            
+            const opt = {
+                margin:       10,
+                filename:     'Boletim_Financeiro.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                // Configurado em A4 (landscape para se ajustar às larguras de colunas/gráficos)
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            };
+
+            // HTML2PDF entra em ação ignorando o sidebar e botões que tem "data-html2canvas-ignore"
+            html2pdf().set(opt).from(element).save();
+        }
+
+
+        // --- 5. Automações e Popups Restantes ---
         document.addEventListener("DOMContentLoaded", function() {
             // Lógica de Segmentos
             setTimeout(() => {
@@ -782,8 +853,13 @@
                 document.getElementById('seg-ecom').style.width = '16.2%';
             }, 500); 
 
-            // Sistema Inteligente de Popups (Insights atualizados)
             const insights = [
+                {
+                    title: "Ponto de Equilíbrio (Atual)",
+                    message: "Cálculo real do P.E. disparou com base nas despesas já aplicadas frente ao faturamento parcial.",
+                    icon: "⚖️",
+                    type: "warning"
+                },
                 {
                     title: "Faturamento (Julho)",
                     message: "O faturamento atual está em R$ 4,67M. A previsão de fechamento é R$ 35,35M.",
@@ -806,12 +882,6 @@
                     title: "Despesas Operacionais",
                     message: "Bom indicador: Despesas estão em R$ 21,8M, o que deixa R$ 7,4M de margem frente à previsão.",
                     icon: "🛡️",
-                    type: "success"
-                },
-                {
-                    title: "Ponto de Equilíbrio",
-                    message: "O P.E. está estabilizado em 78,0%, melhor que a previsão de 84,5%.",
-                    icon: "⚖️",
                     type: "success"
                 }
             ];
