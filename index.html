@@ -87,7 +87,7 @@
         /* ================= MAIN CONTENT ================= */
         .main-content {
             flex-grow: 1; padding: 32px 40px; overflow-y: auto; background-color: #ffffff; height: 100vh;
-            position: relative; /* Necessário para os popups/toasts */
+            position: relative; /* Para o toast popup */
         }
 
         /* Top Header */
@@ -128,7 +128,9 @@
         }
 
         .col-stack {
-            display: flex; flex-direction: column; gap: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
         
         @media (max-width: 1400px) {
@@ -186,7 +188,7 @@
         .data-table .fw-bold { font-weight: 700; }
         .data-table .row-highlight { background-color: #f9fafb; font-weight: 700; }
         
-        /* Segmented Progress Bar (Resumo Faturamento) */
+        /* Segmented Progress Bar */
         .summary-bar-container { margin-top: 10px; margin-bottom: 24px; }
         .summary-bar { display: flex; height: 32px; border-radius: 8px; overflow: hidden; gap: 6px; }
         .summary-bar > div { transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -202,29 +204,18 @@
         .leg-perc { font-size: 11px; font-weight: 500; color: var(--text-muted); display: flex; flex-direction: column; gap: 2px;}
         .leg-perc-badge { font-weight: 700; color: var(--primary-dark); }
         
-        /* Popup Toast CSS */
+        /* Popup Toast */
         .toast-container {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            position: fixed; top: 24px; right: 24px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 12px;
         }
 
         .toast {
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            width: 320px;
-            transform: translateX(120%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background-color: var(--primary-dark); color: white;
+            padding: 16px 20px; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex; align-items: flex-start; gap: 12px; width: 320px;
+            transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-left: 4px solid var(--primary-light);
         }
 
@@ -239,7 +230,10 @@
 
     <div class="app-container">
         <div class="sidebar">
-            <div class="logo"><div class="logo-icon">⬢</div></div>
+            <div class="logo">
+                <div class="logo-icon">⬢</div>
+            </div>
+
             <div class="nav-section">
                 <div class="nav-item active" title="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
@@ -251,6 +245,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
             </div>
+
             <div class="nav-section">
                 <div class="nav-item" title="Orçamentos">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
@@ -262,6 +257,13 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
                 </div>
             </div>
+
+            <div class="nav-section">
+                <div class="nav-item" title="Analytics">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                </div>
+            </div>
+
             <div class="sidebar-bottom" title="AI Assistant">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
             </div>
@@ -274,14 +276,14 @@
             <div class="top-header">
                 <div class="header-title">
                     <h1>Dashboard Financeiro</h1>
-                    <p>Panorama financeiro com foco em resultado e tomada de decisão • 01/07/2026</p>
+                    <p>Panorama financeiro com foco em resultado e tomada de decisão • 07/07/2026</p>
                 </div>
                 <div class="header-actions">
                     <div class="search-bar">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         Busca rápida...
                     </div>
-                    <button class="btn-select">Mensal ▾</button>
+                    <button class="btn-select">jul/2026 ▾</button>
                     <button class="btn-export">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
                         Export
@@ -296,14 +298,14 @@
                             <div class="kpi-icon">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle></svg>
                             </div>
-                            <div class="kpi-title">Faturamento Líquido</div>
+                            <div class="kpi-title">Fat. Líquido</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="32.5" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="34.6" data-format="currency-m">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsto: <strong>R$ 31,8M</strong></div>
+                        <div class="kpi-previsto">Orçamento: <strong>R$ 34,3M</strong></div>
                     </div>
-                    <div class="kpi-footer">↗ + R$ 666.759 (Desvio)</div>
+                    <div class="kpi-footer">↗ + R$ 279.980 (Desvio)</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -315,11 +317,11 @@
                             <div class="kpi-title">Outras Receitas</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="934" data-format="currency-k">0</div>
+                            <div class="kpi-value" data-value="150.4" data-format="currency-k">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsto: <strong>R$ 0</strong></div>
+                        <div class="kpi-previsto">Orçamento: <strong>R$ 0</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: #3f6e1f;">↗ + R$ 934.125 (Realizado)</div>
+                    <div class="kpi-footer" style="color: #3f6e1f;">↗ + R$ 149.999 (Realizado)</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -331,11 +333,11 @@
                             <div class="kpi-title">Deduções Totais</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="969" data-format="currency-k">0</div>
+                            <div class="kpi-value" data-value="874" data-format="currency-k">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsto: <strong>R$ 750k</strong></div>
+                        <div class="kpi-previsto">Orçamento: <strong>R$ 750k</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ 219.303 (Perda acima do previsto)</div>
+                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ -124.073 (Desvio)</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -347,11 +349,11 @@
                             <div class="kpi-title">Despesas Operacionais</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="30.3" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="29.5" data-format="currency-m">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsto: <strong>R$ 29,3M</strong></div>
+                        <div class="kpi-previsto">Orçamento: <strong>R$ 29,2M</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ 1.021.561 acima do orçamento</div>
+                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ -259.233 (Desvio)</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -363,11 +365,11 @@
                             <div class="kpi-title">Ponto de Equilíbrio</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="93.3" data-format="percent">0</div>
+                            <div class="kpi-value" data-value="85.3" data-format="percent">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsto: <strong>78,0%</strong></div>
+                        <div class="kpi-previsto">Orçamento: <strong>78,0%</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--accent-red);">↘ 15,3% de estouro na meta</div>
+                    <div class="kpi-footer" style="color: var(--accent-red);">↘ 7,3% acima</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -379,11 +381,11 @@
                             <div class="kpi-title">Saldo Fluxo de Caixa</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="15.1" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="13.1" data-format="currency-m">0</div>
                         </div>
                         <div class="kpi-previsto">Atualizado <strong>hoje</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--text-muted);">Conta Corrente: R$ 4,79M</div>
+                    <div class="kpi-footer" style="color: var(--text-muted);">Conta Corrente: R$ 3,08M</div>
                 </div>
             </div>
 
@@ -401,17 +403,17 @@
                         <div style="display: flex; gap: 24px; margin-bottom: 12px; flex-wrap: wrap;">
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2024</div>
-                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">85,0%</div>
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">82,2%</div>
                             </div>
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2025</div>
-                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">82,2%</div>
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">85,0%</div>
                             </div>
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2026 (Atual)</div>
                                 <div style="display: flex; align-items: baseline; gap: 6px;">
-                                    <h2 style="font-size: 20px; font-weight: 800; color: var(--text-dark);">90,3%</h2>
-                                    <span class="badge red" style="padding: 2px 6px;">↗ 15%</span>
+                                    <h2 style="font-size: 20px; font-weight: 800; color: var(--text-dark);">89,5%</h2>
+                                    <span class="badge red" style="padding: 2px 6px;">↘ Alerta</span>
                                 </div>
                             </div>
                         </div>
@@ -422,7 +424,7 @@
                         <div class="card-title-row">
                             <div class="card-title-text">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-                                Demonstrativo Financeiro
+                                Demonstrativo Financeiro (jul/2026)
                             </div>
                         </div>
                         <table class="data-table">
@@ -437,45 +439,45 @@
                             <tbody>
                                 <tr>
                                     <td class="fw-bold">Fat. Bruto</td>
-                                    <td class="text-right">R$ 32.800.808</td>
-                                    <td class="text-right">R$ 33.505.327</td>
-                                    <td class="text-right text-muted">R$ 704.519</td>
+                                    <td class="text-right">R$ 35.354.020</td>
+                                    <td class="text-right">R$ 35.504.019</td>
+                                    <td class="text-right text-muted">R$ 149.999</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Fat. Frete</td>
-                                    <td class="text-right">R$ 32.800.808</td>
-                                    <td class="text-right">R$ 32.571.202</td>
-                                    <td class="text-right">-R$ 229.606</td>
+                                    <td class="text-right">R$ 35.354.020</td>
+                                    <td class="text-right">R$ 35.354.020</td>
+                                    <td class="text-right">-R$ 0</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Outras R.</td>
                                     <td class="text-right">R$ 0</td>
-                                    <td class="text-right">R$ 934.125</td>
-                                    <td class="text-right text-muted">R$ 934.125</td>
+                                    <td class="text-right">R$ 149.999</td>
+                                    <td class="text-right text-muted">R$ 149.999</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Deduções</td>
                                     <td class="text-right">R$ 750.000</td>
-                                    <td class="text-right">R$ 969.303</td>
-                                    <td class="text-right">-R$ 219.303</td>
+                                    <td class="text-right">R$ 874.073</td>
+                                    <td class="text-right">R$ 124.073</td>
                                 </tr>
                                 <tr class="row-highlight">
                                     <td class="fw-bold">Fat. Liquido</td>
-                                    <td class="text-right">R$ 31.869.265</td>
-                                    <td class="text-right fw-bold">R$ 32.536.024</td>
-                                    <td class="text-right text-muted">R$ 666.759</td>
+                                    <td class="text-right">R$ 34.349.966</td>
+                                    <td class="text-right fw-bold">R$ 34.629.946</td>
+                                    <td class="text-right text-muted">R$ 279.980</td>
                                 </tr>
                                 <tr>
                                     <td class="fw-bold">Desp. Ope.</td>
-                                    <td class="text-right">R$ 29.339.833</td>
-                                    <td class="text-right">R$ 30.361.394</td>
-                                    <td class="text-right">-R$ 1.021.561</td>
+                                    <td class="text-right">R$ 29.276.508</td>
+                                    <td class="text-right">R$ 29.535.741</td>
+                                    <td class="text-right">R$ 259.233</td>
                                 </tr>
                                 <tr class="row-highlight">
                                     <td class="fw-bold">P.E</td>
                                     <td class="text-right">78,0%</td>
-                                    <td class="text-right fw-bold">93,3%</td>
-                                    <td class="text-right">-15,3%</td>
+                                    <td class="text-right fw-bold">85,3%</td>
+                                    <td class="text-right">7,3%</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -491,7 +493,7 @@
                             </div>
                             <div class="card-dots">•••</div>
                         </div>
-                        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: var(--text-dark);">R$ 4.579.416</h2>
+                        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: var(--text-dark);">R$ 5.954.306</h2>
                         
                         <div class="summary-bar-container">
                             <div class="summary-bar">
@@ -504,18 +506,18 @@
                         <div class="summary-legend">
                             <div class="leg-item">
                                 <div class="leg-title"><span class="leg-dot" style="background: var(--primary-light);"></span> Contas</div>
-                                <div class="leg-value">R$ 2.149k</div>
-                                <div class="leg-perc"><span>Orç: 492k</span><span class="leg-perc-badge">436%</span></div>
+                                <div class="leg-value">R$ 1.370k</div>
+                                <div class="leg-perc"><span>Orç: 1.912k</span><span class="leg-perc-badge" style="color:var(--accent-red)">71,6%</span></div>
                             </div>
                             <div class="leg-item">
                                 <div class="leg-title"><span class="leg-dot" style="background: var(--primary-dark);"></span> Horizontal</div>
-                                <div class="leg-value">R$ 1.507k</div>
-                                <div class="leg-perc"><span>Orç: 952k</span><span class="leg-perc-badge">158%</span></div>
+                                <div class="leg-value">R$ 3.150k</div>
+                                <div class="leg-perc"><span>Orç: 3.810k</span><span class="leg-perc-badge">82,7%</span></div>
                             </div>
                             <div class="leg-item" style="width: 25%;">
                                 <div class="leg-title"><span class="leg-dot" style="background: #d1d5db;"></span> Ecom</div>
-                                <div class="leg-value">R$ 922k</div>
-                                <div class="leg-perc"><span>Orç: 116k</span><span class="leg-perc-badge">792%</span></div>
+                                <div class="leg-value">R$ 1.433k</div>
+                                <div class="leg-perc"><span>Orç: 1.537k</span><span class="leg-perc-badge">93,3%</span></div>
                             </div>
                         </div>
                     </div>
@@ -537,54 +539,49 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Terceiros Cont.</td>
-                                    <td class="text-right text-muted">R$ 7.898.861</td>
-                                    <td class="text-right">R$ 8.185.354</td>
+                                    <td>Aluguel Imóveis</td>
+                                    <td class="text-right text-muted">R$ 1.203.138</td>
+                                    <td class="text-right">R$ 1.213.031</td>
                                 </tr>
                                 <tr>
-                                    <td>Financiamentos</td>
-                                    <td class="text-right text-muted">R$ 3.744.776</td>
-                                    <td class="text-right">R$ 3.859.947</td>
-                                </tr>
-                                <tr>
-                                    <td>Combustível</td>
-                                    <td class="text-right text-muted">R$ 3.207.280</td>
-                                    <td class="text-right">R$ 3.488.363</td>
-                                </tr>
-                                <tr>
-                                    <td>Manut. Frota</td>
-                                    <td class="text-right text-muted">R$ 824.612</td>
-                                    <td class="text-right">-R$ 989.014</td>
+                                    <td>Manutenção Frota</td>
+                                    <td class="text-right text-muted">R$ 823.402</td>
+                                    <td class="text-right">R$ 911.668</td>
                                 </tr>
                                 <tr>
                                     <td>Benefícios</td>
-                                    <td class="text-right text-muted">R$ 806.046</td>
-                                    <td class="text-right">R$ 934.812</td>
+                                    <td class="text-right text-muted">R$ 752.274</td>
+                                    <td class="text-right">R$ 767.779</td>
                                 </tr>
                                 <tr>
-                                    <td>Pedágio</td>
-                                    <td class="text-right text-muted">R$ 464.818</td>
-                                    <td class="text-right">R$ 513.275</td>
+                                    <td>Segurança</td>
+                                    <td class="text-right text-muted">R$ 242.727</td>
+                                    <td class="text-right">R$ 251.199</td>
                                 </tr>
                                 <tr>
-                                    <td>Seguro</td>
-                                    <td class="text-right text-muted">R$ 405.308</td>
-                                    <td class="text-right">-R$ 489.442</td>
-                                </tr>
-                                <tr>
-                                    <td>Logística</td>
-                                    <td class="text-right text-muted">R$ 257.383</td>
-                                    <td class="text-right">-R$ 435.360</td>
+                                    <td>Doc. Veículo</td>
+                                    <td class="text-right text-muted">R$ 116.911</td>
+                                    <td class="text-right">R$ 140.549</td>
                                 </tr>
                                 <tr>
                                     <td>Manut. Predial</td>
                                     <td class="text-right text-muted">R$ 40.000</td>
-                                    <td class="text-right fw-bold">-R$ 96.159</td>
+                                    <td class="text-right">R$ 47.327</td>
+                                </tr>
+                                <tr>
+                                    <td>IPTU</td>
+                                    <td class="text-right text-muted">R$ 0</td>
+                                    <td class="text-right">R$ 33.377</td>
+                                </tr>
+                                <tr>
+                                    <td>Proj. Outros</td>
+                                    <td class="text-right text-muted">R$ 17.865</td>
+                                    <td class="text-right">R$ 23.539</td>
                                 </tr>
                                 <tr class="row-highlight">
                                     <td class="fw-bold">Total</td>
-                                    <td class="text-right fw-bold">R$ 17.649.084</td>
-                                    <td class="text-right fw-bold">R$ 18.991.726</td>
+                                    <td class="text-right fw-bold">R$ 3.196.316</td>
+                                    <td class="text-right fw-bold">R$ 3.401.585</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -619,24 +616,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Venda Veículos</td>
-                                    <td class="text-right fw-bold">R$ 683.998</td>
-                                </tr>
-                                <tr>
-                                    <td>Recuperação Perdas</td>
-                                    <td class="text-right fw-bold">R$ 125.076</td>
-                                </tr>
-                                <tr>
-                                    <td>Aplicações Financeiras</td>
-                                    <td class="text-right fw-bold">R$ 110.307</td>
-                                </tr>
-                                <tr>
                                     <td>Outros</td>
-                                    <td class="text-right fw-bold">R$ 14.745</td>
+                                    <td class="text-right fw-bold">R$ 13.779</td>
+                                </tr>
+                                <tr>
+                                    <td>Demais Entradas</td>
+                                    <td class="text-right fw-bold">R$ 136.652</td>
                                 </tr>
                                 <tr class="row-highlight">
                                     <td class="fw-bold" style="padding-top: 24px;">Total Geral</td>
-                                    <td class="text-right fw-bold" style="padding-top: 24px; font-size: 16px; color: var(--primary-dark);">R$ 934.126</td>
+                                    <td class="text-right fw-bold" style="padding-top: 24px; font-size: 16px; color: var(--primary-dark);">R$ 150.431</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -649,12 +638,13 @@
     </div>
 
     <script>
-        // 0. Animação de Contagem dos Números Superiores
+        // --- 0. Animação de Contagem dos Números Superiores (Giro/Contador) ---
         function animateValue(obj, start, end, duration, formatFn) {
             let startTimestamp = null;
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // Easing suave (easeOutExpo)
                 const easeProgress = 1 - Math.pow(1 - progress, 4);
                 const currentVal = progress * (end - start) + start;
                 
@@ -681,12 +671,13 @@
             });
         });
 
-        // 1. Gráfico de Barras Sazonal Multi-ano
+
+        // --- 1. Gráfico de Barras Sazonal Multi-ano ---
         var optionsBar = {
             series: [
-                { name: '2024', data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3] },
-                { name: '2025', data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7] },
-                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.3] }
+                { name: '2024', data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3, 81.3] },
+                { name: '2025', data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7, 82.8] },
+                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.7, 85.3] } // Julho = 85.3
             ],
             chart: { 
                 type: 'bar', 
@@ -721,7 +712,7 @@
             },
             stroke: { show: true, width: 2, colors: ['transparent'] },
             xaxis: {
-                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
                 axisBorder: { show: false },
                 axisTicks: { show: false },
                 labels: { style: { colors: '#9ca3af', fontSize: '11px', fontWeight: 500 } }
@@ -735,9 +726,9 @@
         var chartBar = new ApexCharts(document.querySelector("#barChart"), optionsBar);
         chartBar.render();
 
-        // 2. Gráfico de Rosca (Donut) Fatiado estilo velocímetro
+        // --- 2. Gráfico de Rosca (Donut) Fatiado estilo velocímetro ---
         var optionsDonut = {
-            series: [644876, 202211, 111836, 10380], 
+            series: [579085, 141359, 130685, 22944], 
             labels: ['Falta', 'Comercial', 'Avaria', 'Sinistro'],
             chart: { 
                 type: 'donut', 
@@ -770,14 +761,14 @@
                                 showAlways: true,
                                 label: 'Total',
                                 color: '#6b7280',
-                                formatter: function (w) { return "R$ 969k"; }
+                                formatter: function (w) { return "R$ 874k"; }
                             }
                         }
                     }
                 }
             },
             dataLabels: { enabled: false },
-            // Essa propriedade "stroke" fatia o gráfico de rosca, imitando os tracinhos do velocímetro
+            // Propriedade stroke "fatia" a rosca com a cor do fundo
             stroke: { 
                 show: true,
                 width: 4, 
@@ -795,53 +786,56 @@
         var chartDonut = new ApexCharts(document.querySelector("#donutChart"), optionsDonut);
         chartDonut.render();
 
-        // 3. Automações e Popups
+        // --- 3. Automações e Popups ---
         document.addEventListener("DOMContentLoaded", function() {
-            // Formatar números negativos
-            const tableCells = document.querySelectorAll('.data-table td');
+            // Formatar números de desvios negativos/acima em vermelho nas tabelas
+            const tableCells = document.querySelectorAll('.data-table td:last-child');
             tableCells.forEach(function(td) {
-                if (td.innerText.includes('-R$') || td.innerText.includes('-%') || (td.innerText.trim().startsWith('-') && !isNaN(parseInt(td.innerText.charAt(1))))) {
-                    td.style.color = 'var(--accent-red)';
-                    td.style.fontWeight = '700';
+                // Em despesas/deduções/PE, se não tem -, é estouro = vermelho. No frete, se tem -, é ruim.
+                // Simplificação: apenas busca o que não está text-muted e marca red caso o dev considere
+                if(td.innerText !== "" && !td.classList.contains('text-muted') && !td.classList.contains('fw-bold')){
+                     td.style.color = 'var(--accent-red)';
+                     td.style.fontWeight = '700';
                 }
             });
 
-            // Animação da Barra Segmentada
+            // Animação da Barra Segmentada de Faturamento
+            // Total: 5.954.306 | Contas: 1370001 (23.0%) | Horizontal: 3150592 (52.9%) | Ecom: 1433713 (24.1%)
             setTimeout(() => {
-                document.getElementById('seg-contas').style.width = '46.94%';
-                document.getElementById('seg-horizontal').style.width = '32.91%';
-                document.getElementById('seg-ecom').style.width = '20.15%';
+                document.getElementById('seg-contas').style.width = '23.0%';
+                document.getElementById('seg-horizontal').style.width = '52.9%';
+                document.getElementById('seg-ecom').style.width = '24.1%';
             }, 500); 
 
             // Sistema Inteligente de Popups (Insights)
             const insights = [
                 {
-                    title: "Faturamento Líquido",
-                    message: "O faturamento líquido atingiu R$ 32,5M, superando a previsão em R$ 666.759.",
+                    title: "Faturamento Líquido (Julho)",
+                    message: "O faturamento líquido atingiu R$ 34,6M, superando o orçamento em R$ 279 mil.",
                     icon: "📈",
                     type: "success"
                 },
                 {
                     title: "Outras Receitas",
-                    message: "Venda de veículos é a principal origem extra, somando R$ 683.998.",
+                    message: "Arrecadação adicional fechou em R$ 150.431 contra a previsão nula.",
                     icon: "💰",
                     type: "success"
                 },
                 {
                     title: "Deduções Totais",
-                    message: "Deduções alcançaram R$ 969k. 'Faltas' representa 66% desse valor (R$ 644k).",
+                    message: "Deduções subiram para R$ 874k (R$ 124k de desvio). O maior ofensor foram as Faltas (R$ 579k).",
                     icon: "⚠️",
                     type: "warning"
                 },
                 {
                     title: "Despesas Operacionais",
-                    message: "Custo de Manutenção Predial estourou o orçamento de 40k em 140,4%.",
+                    message: "Atenção: As despesas (R$ 29,5M) excederam o limite orçamentário estipulado.",
                     icon: "🚨",
                     type: "danger"
                 },
                 {
                     title: "Ponto de Equilíbrio",
-                    message: "O indicador de P.E. está crítico em 93,3%, desvio de 15,3% acima do teto estipulado.",
+                    message: "O P.E. atingiu 85,3%, acima da meta de 78%. Histórico anual está em 89,5%.",
                     icon: "⚖️",
                     type: "danger"
                 }
@@ -876,22 +870,20 @@
                 setTimeout(() => {
                     toast.classList.remove('show');
                     setTimeout(() => toast.remove(), 400); 
-                }, 8000); // Fica 8s na tela
+                }, 8000); 
 
                 currentInsightIndex = (currentInsightIndex + 1) % insights.length;
             }
 
-            // Exibe o 1º após 5 segundos...
             setTimeout(() => {
                 showNextInsight();
-                // ... e repete a cada 2 minutos
-                setInterval(showNextInsight, 120000);
+                setInterval(showNextInsight, 120000); // 2 minutos
             }, 5000);
 
             // Atualização Automática (15min)
             setInterval(() => {
                 window.location.reload();
-            }, 5 * 60 * 1000); 
+            }, 15 * 60 * 1000); 
         });
     </script>
 </body>
