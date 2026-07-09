@@ -6,7 +6,6 @@
     <title>Dashboard Financeiro - Fiscalis</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Scripts Externos -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -140,6 +139,7 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+            min-width: 0; /* Previne estouro horizontal de flex/grid */
         }
         
         @media (max-width: 1400px) {
@@ -151,6 +151,7 @@
         .card {
             background-color: var(--bg-card); border: 1px solid var(--border-color);
             border-radius: 20px; padding: 24px; position: relative;
+            min-width: 0; /* Impede estouro de grid */
         }
         .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .card-title-text { font-size: 16px; font-weight: 600; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
@@ -355,7 +356,6 @@
 <body>
 
     <div class="app-container">
-        <!-- Menu transformado em Bottom Navigation no Mobile -->
         <div class="sidebar" data-html2canvas-ignore>
             <div class="logo">
                 <div class="logo-icon">⬢</div>
@@ -403,7 +403,7 @@
             <div class="top-header">
                 <div class="header-title">
                     <h1>Dashboard Financeiro</h1>
-                    <p>Panorama financeiro com foco em resultado e tomada de decisão • 07/07/2026</p>
+                    <p>Panorama financeiro com foco em resultado e tomada de decisão • 09/07/2026</p>
                 </div>
                 <div class="header-actions" data-html2canvas-ignore>
                     <div class="search-bar">
@@ -411,7 +411,6 @@
                         Busca rápida...
                     </div>
                     <button class="btn-select">jul/2026 ▾</button>
-                    <!-- Export PDF ajustado para Desktop Mode durante captura -->
                     <button class="btn-export" onclick="exportToPDF()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
                         Export
@@ -429,11 +428,11 @@
                             <div class="kpi-title">Fat. Bruto (Realizado)</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="4.67" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="7.37" data-format="currency-m">0</div>
                         </div>
                         <div class="kpi-previsto">Previsão: <strong>R$ 35,35M</strong></div>
                     </div>
-                    <div class="kpi-footer">A realizar: R$ 30.682.996</div>
+                    <div class="kpi-footer">A realizar: R$ 27.985.071</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -461,11 +460,11 @@
                             <div class="kpi-title">Deduções Totais</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="873" data-format="currency-k">0</div>
+                            <div class="kpi-value" data-value="891" data-format="currency-k">0</div>
                         </div>
                         <div class="kpi-previsto">Meta: <strong>R$ 750k</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ 123.395 acima da meta</div>
+                    <div class="kpi-footer" style="color: var(--accent-red);">↘ R$ 140.908 acima da meta</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -477,11 +476,11 @@
                             <div class="kpi-title">Despesas Operacionais</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="21.83" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="23.02" data-format="currency-m">0</div>
                         </div>
                         <div class="kpi-previsto">Previsão: <strong>R$ 29,27M</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: #3f6e1f;">✓ Margem de R$ 7,4M livre</div>
+                    <div class="kpi-footer" style="color: #3f6e1f;">✓ Margem de R$ 6,2M livre</div>
                 </div>
 
                 <div class="card kpi-card">
@@ -495,7 +494,7 @@
                         <div class="kpi-value-row">
                             <div class="kpi-value" id="pe-value-display" data-format="percent">0</div>
                         </div>
-                        <div class="kpi-previsto">Previsão: <strong>84,5%</strong></div>
+                        <div class="kpi-previsto">Previsão: <strong>84,6%</strong></div>
                         <div class="kpi-previsto">Meta: <strong>78,0%</strong></div>
                     </div>
                     <div class="kpi-footer" style="color: var(--text-muted);">Atualizado de forma automática</div>
@@ -510,11 +509,11 @@
                             <div class="kpi-title">Saldo Fluxo de Caixa</div>
                         </div>
                         <div class="kpi-value-row">
-                            <div class="kpi-value" data-value="13.1" data-format="currency-m">0</div>
+                            <div class="kpi-value" data-value="16.21" data-format="currency-m">0</div>
                         </div>
                         <div class="kpi-previsto">Atualizado <strong>hoje</strong></div>
                     </div>
-                    <div class="kpi-footer" style="color: var(--text-muted);">Conta Corrente: R$ 3,08M</div>
+                    <div class="kpi-footer" style="color: var(--text-muted);">Conta Corrente: R$ 5,75M</div>
                 </div>
             </div>
 
@@ -536,13 +535,13 @@
                             </div>
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2025</div>
-                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">85,0%</div>
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-dark);">84,9%</div>
                             </div>
                             <div>
                                 <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">2026 (Consolidado)</div>
                                 <div style="display: flex; align-items: baseline; gap: 6px;">
                                     <h2 style="font-size: 20px; font-weight: 800; color: var(--text-dark);">89,5%</h2>
-                                    <span class="badge green" style="padding: 2px 6px;">↗ +1,7% vs Jul/25</span>
+                                    <span class="badge green" style="padding: 2px 6px;">↗ +1,8% vs Jul/25</span>
                                 </div>
                             </div>
                         </div>
@@ -557,7 +556,6 @@
                             </div>
                             <button id="toggleTableBtn" class="btn-select" style="padding: 6px 14px; font-size: 12px; border-color: var(--primary-light);" data-html2canvas-ignore>Visualizar Projetado</button>
                         </div>
-                        <!-- Embrulhando Tabela para Scroll no Mobile -->
                         <div class="table-responsive">
                             <table class="data-table">
                                 <thead>
@@ -601,13 +599,13 @@
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Desp. Ope.</td>
-                                        <td class="text-right">R$ 29.276.511</td>
+                                        <td class="text-right">R$ 29.276.510</td>
                                         <td class="text-right" id="td-desp-ope">-</td>
                                         <td class="text-right text-muted" id="td-dev-desp">-</td>
                                     </tr>
                                     <tr class="row-highlight">
                                         <td class="fw-bold">P.E</td>
-                                        <td class="text-right">84,5%</td>
+                                        <td class="text-right">84,6%</td>
                                         <td class="text-right fw-bold" id="td-pe-table">-</td>
                                         <td class="text-right text-muted" id="td-dev-pe">-</td>
                                     </tr>
@@ -626,7 +624,7 @@
                             </div>
                             <div class="card-dots">•••</div>
                         </div>
-                        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: var(--text-dark);">R$ 4.671.024</h2>
+                        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; color: var(--text-dark);">R$ 7.368.949</h2>
                         
                         <div class="summary-bar-container">
                             <div class="summary-bar">
@@ -639,18 +637,18 @@
                         <div class="summary-legend">
                             <div class="leg-item">
                                 <div class="leg-title"><span class="leg-dot" style="background: var(--primary-light);"></span> Contas</div>
-                                <div class="leg-value">R$ 567k</div>
-                                <div class="leg-perc"><span>Prev: 478k</span><span class="leg-perc-badge" style="color:#3f6e1f">118,7%</span></div>
+                                <div class="leg-value">R$ 494k</div>
+                                <div class="leg-perc"><span>Prev: 637k</span><span class="leg-perc-badge" style="color:var(--accent-red)">77,6%</span></div>
                             </div>
                             <div class="leg-item">
                                 <div class="leg-title"><span class="leg-dot" style="background: var(--primary-dark);"></span> Horizontal</div>
-                                <div class="leg-value">R$ 3.150k</div>
-                                <div class="leg-perc"><span>Prev: 3.810k</span><span class="leg-perc-badge" style="color:var(--accent-red)">82,7%</span></div>
+                                <div class="leg-value">R$ 4.530k</div>
+                                <div class="leg-perc"><span>Prev: 5.715k</span><span class="leg-perc-badge" style="color:var(--accent-red)">79,3%</span></div>
                             </div>
                             <div class="leg-item" style="width: 25%;">
                                 <div class="leg-title"><span class="leg-dot" style="background: #d1d5db;"></span> Ecom</div>
-                                <div class="leg-value">R$ 715k</div>
-                                <div class="leg-perc"><span>Prev: 952k</span><span class="leg-perc-badge" style="color:var(--accent-red)">75,1%</span></div>
+                                <div class="leg-value">R$ 2.344k</div>
+                                <div class="leg-perc"><span>Prev: 2.869k</span><span class="leg-perc-badge" style="color:var(--accent-red)">81,7%</span></div>
                             </div>
                         </div>
                     </div>
@@ -667,7 +665,7 @@
                                 <thead>
                                     <tr>
                                         <th>Grupo Conta</th>
-                                        <th class="text-right">Previsão</th>
+                                        <th class="text-right">Orçado</th>
                                         <th class="text-right">Realizado</th>
                                     </tr>
                                 </thead>
@@ -675,22 +673,27 @@
                                     <tr>
                                         <td>Aluguel Imóveis</td>
                                         <td class="text-right text-muted">R$ 1.203.138</td>
-                                        <td class="text-right">R$ 1.213.031</td>
+                                        <td class="text-right">R$ 1.211.769</td>
                                     </tr>
                                     <tr>
                                         <td>Manutenção Frota</td>
                                         <td class="text-right text-muted">R$ 823.402</td>
-                                        <td class="text-right">R$ 911.668</td>
+                                        <td class="text-right">R$ 931.181</td>
                                     </tr>
                                     <tr>
                                         <td>Benefícios</td>
                                         <td class="text-right text-muted">R$ 752.274</td>
-                                        <td class="text-right">R$ 763.634</td>
+                                        <td class="text-right">R$ 767.779</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Logística</td>
+                                        <td class="text-right text-muted">R$ 247.383</td>
+                                        <td class="text-right">R$ 320.249</td>
                                     </tr>
                                     <tr>
                                         <td>Segurança</td>
                                         <td class="text-right text-muted">R$ 242.727</td>
-                                        <td class="text-right">R$ 251.199</td>
+                                        <td class="text-right">R$ 251.479</td>
                                     </tr>
                                     <tr>
                                         <td>Doc. Veículo</td>
@@ -700,7 +703,7 @@
                                     <tr>
                                         <td>Manut. Predial</td>
                                         <td class="text-right text-muted">R$ 40.000</td>
-                                        <td class="text-right">R$ 47.327</td>
+                                        <td class="text-right">R$ 61.365</td>
                                     </tr>
                                     <tr>
                                         <td>IPTU</td>
@@ -708,14 +711,14 @@
                                         <td class="text-right">R$ 33.377</td>
                                     </tr>
                                     <tr>
-                                        <td>Comercial</td>
-                                        <td class="text-right text-muted">R$ 17.865</td>
-                                        <td class="text-right">R$ 23.539</td>
+                                        <td>Projetos Outros</td>
+                                        <td class="text-right text-muted">R$ 0</td>
+                                        <td class="text-right">R$ 13.115</td>
                                     </tr>
                                     <tr class="row-highlight">
                                         <td class="fw-bold">Total</td>
-                                        <td class="text-right fw-bold">R$ 3.196.316</td>
-                                        <td class="text-right fw-bold">R$ 3.397.440</td>
+                                        <td class="text-right fw-bold">R$ 3.425.835</td>
+                                        <td class="text-right fw-bold">R$ 3.730.863</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -772,11 +775,11 @@
 
     <script>
         // --- 0. Lógica de Cálculos Base (PE Dinâmico) ---
-        const rlzFatBruto = 4671024;
-        const rlzFatFrete = 4671024; 
+        const rlzFatBruto = 7368949;
+        const rlzFatFrete = 7368949; 
         const rlzOutras = 13779;
-        const rlzDedu = 873395;
-        const rlzDesp = 21838232;
+        const rlzDedu = 890908;
+        const rlzDesp = 23023522;
         
         const rlzFatLiquido = rlzFatBruto + rlzOutras - rlzDedu;
         const calcPE = (rlzDesp / rlzFatLiquido) * 100;
@@ -816,7 +819,7 @@
             series: [
                 { name: '2024', data: [86.3, 81.7, 71.0, 83.6, 75.7, 76.3, 81.3] },
                 { name: '2025', data: [93.8, 90.5, 79.6, 87.5, 74.5, 76.7, 82.8] },
-                { name: '2026', data: [99.3, 96.1, 76.4, 97.4, 84.3, 93.7, 84.5] } 
+                { name: '2026', data: [99.3, 97.1, 76.4, 97.4, 84.2, 93.6, 84.6] } 
             ],
             chart: { 
                 type: 'bar', 
@@ -858,7 +861,7 @@
 
         // --- 2. Gráfico de Rosca (Donut) ---
         var optionsDonut = {
-            series: [578407, 141359, 130685, 22944], 
+            series: [580422, 156857, 130685, 22944], 
             labels: ['Falta', 'Comercial', 'Avaria', 'Sinistro'],
             chart: { 
                 type: 'donut', height: 250,
@@ -878,7 +881,7 @@
                             },
                             total: {
                                 show: true, showAlways: true, label: 'Total', color: '#6b7280',
-                                formatter: function (w) { return "R$ 873k"; }
+                                formatter: function (w) { return "R$ 891k"; }
                             }
                         }
                     }
@@ -907,7 +910,7 @@
 
             // Dados Projetados Base
             const prevFat = 35354020, prevOutras = 150000, prevDedu = 750000;
-            const prevFatLiq = 34349966, prevDesp = 29276511, prevPe = 84.5;
+            const prevFatLiq = 34349966, prevDesp = 29276510, prevPe = 84.6;
 
             // Variáveis Correntes
             const dFat = isR ? rlzFatBruto : prevFat;
@@ -961,7 +964,7 @@
             
             const opt = {
                 margin:       10,
-                filename:     'Boletim_Financeiro_Jul_2026.pdf',
+                filename:     'Boletim_Financeiro_09_07_2026.pdf',
                 image:        { type: 'jpeg', quality: 1 },
                 html2canvas:  { 
                     scale: 2, 
@@ -983,9 +986,9 @@
         // --- 5. Popups e Carregamentos Rápidos ---
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
-                document.getElementById('seg-contas').style.width = '12.8%';
-                document.getElementById('seg-horizontal').style.width = '71.0%';
-                document.getElementById('seg-ecom').style.width = '16.2%';
+                document.getElementById('seg-contas').style.width = '6.7%';
+                document.getElementById('seg-horizontal').style.width = '61.5%';
+                document.getElementById('seg-ecom').style.width = '31.8%';
             }, 500); 
 
             const insights = [
@@ -996,7 +999,7 @@
                 },
                 {
                     title: "Despesas Operacionais",
-                    message: "Despesas estão em R$ 21,8M, restando R$ 7,4M de margem até o teto da meta.",
+                    message: "Despesas estão em R$ 23,0M, restando R$ 6,2M de margem até o teto da meta.",
                     icon: "🛡️", type: "success"
                 }
             ];
